@@ -17,9 +17,9 @@ router.get('/sub', sub)
 
 router.put('/view/:id', addView)
 
-router.put('/view/:id', trend)
+router.put('/trend', trend)
 
-router.put('/view/:id', random)
+router.put('/random', random)
 
 
 export default router
