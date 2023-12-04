@@ -13,7 +13,7 @@ router.put('/:id', verifyToken, updateVideo)
 
 router.delete('/:id', verifyToken, deleteVideo)
 
-router.get('/sub', sub)
+router.get('/sub', verifyToken, sub)
 
 router.put('/view/:id', addView)
 
