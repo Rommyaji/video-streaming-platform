@@ -1,4 +1,5 @@
 import videoSchema from '../models/video.js'
+import usersSchema from '../models/users.js'
 import { createError } from '../utils/error.js'
 
 export const addVideo = async (req, res, next) => {
@@ -15,6 +16,7 @@ export const addVideo = async (req, res, next) => {
 
 
 export const getVideo = async (req, res, next) => {
+
     const { id } = req.params
 
     try {
@@ -27,6 +29,7 @@ export const getVideo = async (req, res, next) => {
 
 
 export const updateVideo = async (req, res, next) => {
+
     const { id } = req.params
 
     try {
@@ -47,6 +50,7 @@ export const updateVideo = async (req, res, next) => {
 
 
 export const deleteVideo = async (req, res, next) => {
+
     const { id } = req.params
 
     try {
@@ -65,20 +69,53 @@ export const deleteVideo = async (req, res, next) => {
 
 
 export const sub = async (req, res, next) => {
+    try{
+        const users = await usersSchema.find(req.user.id)
+        const subscribed = users.subscribedUsers
 
+        const list = Promise.all(
+            subscribed.map(channelId => {
+                return videoSchema.find({userId: channelId})
+            })
+        )
+
+        res.status(200).json(list)
+    } catch(err) {
+        next(err)
+    }
 }
 
 
 export const addView = async (req, res, next) => {
 
+    const { id } = req.params
+
+    try {
+        await videoSchema.findByIdAndUpdate(id, {
+            $inc: {views}
+        })
+        res.status(200).json("views increased")
+    } catch(err) {
+        next(err)
+    }
 }
 
 
 export const trend = async (req, res, next) => {
-
+    try {
+        const video = await videoSchema.find().sort({ views: 1 })
+        res.status(200).json(video)
+    } catch(err) {
+        next(err)
+    }
 }
 
 
 export const random = async (req, res, next) => {
-
+    try {
+        const video =await videoSchema.aggregate([{ $sample: { size: 50 }}])
+        res.status(200).json(video)
+    } catch(err) {
+        next(err)
+    }
 }
