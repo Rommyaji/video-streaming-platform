@@ -11,13 +11,13 @@ router.delete('/:id', verifyToken, deleteUser)
 
 router.get('/search/:id', getUser)
 
-router.put('/:id', verifyToken, subscribe)
+router.put('/sub/:id', verifyToken, subscribe)
 
-router.put('/:id', verifyToken, unsubscribe)
+router.put('/unsub/:id', verifyToken, unsubscribe)
 
-router.put('/:id', verifyToken, like)
+router.put('/like/:id', verifyToken, like)
 
-router.put('/:id', verifyToken, dislike)
+router.put('/dislike/:id', verifyToken, dislike)
 
 
 
