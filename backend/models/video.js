@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const videoSchema = new mongoose.Schema({
-    usedId: {
+    userId: {
         type: String,
         required: true,
     },
@@ -27,15 +27,15 @@ const videoSchema = new mongoose.Schema({
         default: 0
     },
     tags:{
-        type: {String},
+        type: [String],
         default: []
     },
     likes:{
-        type: {String},
+        type: [String],
         default: []
     },
     dislikes:{
-        type: {String},
+        type: [String],
         default: []
     }
 }, 
